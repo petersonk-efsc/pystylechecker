@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+    <meta charset="utf-8"/>
+    </head>
+    <body style="margin: 5px">
+		<div id='heading' style="align: center">
+			<ul>
+				<li>Python
+					<ul>
+						<li><a href="#pyGuide">Python Guidelines</a></li>
+						<li><a href="#pyGrade">Python Grade Calculation</a></li>
+						<li><a href="#pySample">Python Sample Program</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div id='pyGuide'>
+			<h1>Python Guidelines</h1>
+			The online Python Style Checker runs python code through two industry standard Python style checkers:
+			<ul>
+				<li>pylint (version 2.8.3)
+					<ul><li><a href="https://www.pylint.org/">pylint Home Page</a></li></ul>
+				</li>
+				<li>pycodestyle (version 2.7.0) checks code against PEP 8 style conventions
+					<ul>
+						<li><a href="https://pycodestyle.pycqa.org/en/latest/">pycodestyle Home Page</a></li>
+						<li><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8 style guide</a></li>
+					</ul>
+				</li>
+			</ul>
+			As an alternative to the online version, you can install both pylint and pycodestyle locally. To install the specific versions used in the online version (and during grading), use the following commands at the command prompt
+			<ul>
+				<li>pip install pylint==2.8.3</li>
+				<li>pip install pycodestyle==2.7.0</li>
+			</ul>
+			If you want the latest versions, you may leave off the == part
+			<ul>
+				<li>pip install pylint</li>
+				<li>pip install pycodestyle</li>
+			</ul>
+			Note that the pip command was installed when you installed python.  If you have trouble running pip, then you may not have added python to your path during installation.  At the command prompt, type:
+			<ul><li>python --version</li></ul>
+			You should see something like:
+			<ul><li>Python 3.8.3</li></ul>
+			You will want at least version 3.8.3
+		</div>
+		<div id='pyGrade'>
+			<h1>Python Style Grade Calculation</h1>
+				Some issues are only caught by pylint, others by pycodestyle.  Many are caught by both.<br/>
+				Each pylint/pycodestyle issus reduces your final grade.
+				<ul><li>(Twice the number of lines - pylint issues - pycodestyle issues) / (Twice the number of lines)</li></ul>
+				For example:
+				<ul>
+					<li>Your .py file has 100 lines.  Use 2 * 100 in the calculation below</li>
+					<li>There are 7 pylint issues</li>
+					<li>There are 3 pycodestyle issues</li>
+					<li>Grade is [(200 - 7 - 3) / 200] = 0.95 = 95%
+				<ul>
+				Missing/blank files also affect the grade.  Each file contributes an equal percent to the final grade.  If there are 2 files, then each one is worth 50% of the grade.
+		</div>
+		<div id='pySample'>
+			<h1>Python Sample Program</h1>
+			<pre>
+#!/usr/bin/env python3
+
+"""Module to print Hello World."""
+
+__author__ = 'Karen Peterson'
+__date__ = '6/2/2020'
+
+# print Hello World!
+print('Hello World!')
+</pre>
+		</div>
+    </body>
+</html>
