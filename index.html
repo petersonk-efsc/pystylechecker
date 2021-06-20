@@ -17,15 +17,15 @@
 			await pyodide.runPythonAsync(`
 			import pkg_resources
 			import micropip # runPythonAsync will load micropip automatically
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/pycodestyle-2.7.0-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/colorama-0.4.4-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/isort-5.8.0-py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/lazy_object_proxy-1.6.0-cp39-cp39-win_amd64.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/mccabe-0.6.1-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/toml-0.10.2-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/wrapt-1.12.1-cp310-cp310-win_amd64.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/astroid-2.5.6-py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiless/pylint-2.8.3-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/pycodestyle-2.7.0-py2.py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/colorama-0.4.4-py2.py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/isort-5.8.0-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/lazy_object_proxy-1.6.0-cp39-cp39-win_amd64.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/mccabe-0.6.1-py2.py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/toml-0.10.2-py2.py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/wrapt-1.12.1-cp310-cp310-win_amd64.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/astroid-2.5.6-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/pylint-2.8.3-py3-none-any.whl")
 			`);
 			await pyodide.runPythonAsync(pyWebPylinterLibCode);
 			await pyodide.runPythonAsync(pyWebRunLibCode);
