@@ -6,37 +6,54 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.3/pure-min.css" />
     <script type="text/javascript" src="py_sc_lib.js"></script>
     <script type="text/javascript" src="py_style_checker_lib.js"></script>
-    <script type="text/javascript" src="py_web_run_lib.js"></script>
-    <script type="text/javascript" src="py_web_pylinter_lib.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/pyodide/v0.17.0/full/pyodide.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/pyodide/v0.23.2/full/pyodide.js"></script>
 	<script type="text/javascript">
+/*
+pyodide 0.23.2 has errors when trying to load the only version of pycodestyle 2.10.0 on PyPi.  But, micropip is able to load a safe version of 2.10.0
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/pycodestyle-2.10.0-py2.py3-none-any")
+The following packages are needed for pylint.  But they can be loaded by name and version without needing the wheel files:
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/pylint-2.17.4-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/colorama-0.4.6-py2.py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/tomli-2.0.1-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/type_extensions-0.1.2-py2.py3-none-any.whl")
+The following packages are imported automatically while importing the pylint, colorama, tomli, and type_extensions above so they do not need to be loaded separately:
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/astroid-2.15.5-py3-none-any.whl")
+			## await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/dill-0.3.6-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/isort-5.12.0-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/lazy_object_proxy-1.9.0-cp39-cp39-win_amd64.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/mccabe-0.7.0-py2.py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/platformdirs-3.5.1-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/tomlkit-0.11.8-py3-none-any.whl")
+			## If < Python 3.11, then need the following wheel too.  We do NOT need it anymore because pyodide 0.23.2 is Python 3.11
+			## await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/typing_extensions-4.6.3-py3-none-any.whl")
+			await micropip.install("https://petersonk-efsc.github.io/PyPiWhlFiles/PyPiWhlFiles/wrapt-1.15.0-py3-none-any.whl")
+*/
+	    pyodide = null;
 		async function main(){
 			document.getElementById("fileInput").disabled = true;	
 			document.getElementById("checkBtn").disabled = true;	
-			await loadPyodide({ indexURL : 'https://cdn.jsdelivr.net/pyodide/v0.17.0/full/' });
+			pyodide = await loadPyodide({ indexURL : 'https://cdn.jsdelivr.net/pyodide/v0.23.2/full/' });
+			await pyodide.loadPackage("setuptools")
+			await pyodide.loadPackage("micropip")
 			await pyodide.runPythonAsync(`
 			import pkg_resources
 			import micropip # runPythonAsync will load micropip automatically
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/pycodestyle-2.7.0-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/colorama-0.4.4-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/isort-5.8.0-py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/lazy_object_proxy-1.6.0-cp39-cp39-win_amd64.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/mccabe-0.6.1-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/toml-0.10.2-py2.py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/wrapt-1.12.1-cp310-cp310-win_amd64.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/astroid-2.5.6-py3-none-any.whl")
-			await micropip.install("https://petersonk-efsc.github.io/pystylechecker/PyPiWhlFiles/pylint-2.8.3-py3-none-any.whl")
+			await micropip.install("pycodestyle==2.10.0")
+			await micropip.install("pylint==2.17.4")
+			await micropip.install("colorama==0.4.6")
+			await micropip.install("tomli==2.0.1")
+			await micropip.install("type_extensions==0.1.2")
+			## Do NOT load dill as pyodide 0.23.2 struggles with it, instead use dill.py that simply renames pickle as dill because dill has same interface as pickle
+			with open("dill.py", "w") as out_file:
+			    out_file.write("from pickle import *\\n")
 			`);
-			await pyodide.runPythonAsync(pyWebPylinterLibCode);
-			await pyodide.runPythonAsync(pyWebRunLibCode);
 			await pyodide.runPythonAsync(pyScLibCode);
 			await pyodide.runPythonAsync(pyStyleCheckerCode);
 			setupPage();
 			document.getElementById("fileInput").disabled = false;	
 			document.getElementById("checkBtn").disabled = false;	
 		}
-	</script>
-	<script type="text/javascript">
+
 		async function runChecks() {
 			var pycode =
 				"from js import document\n" + 
@@ -45,6 +62,7 @@
 		}
 	</script>
 	<script>
+
 /**************************************************************************/
 
 function readFile(file, fileSourceId, fileFnameId, fileDispNameId) {

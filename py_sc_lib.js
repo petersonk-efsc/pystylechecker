@@ -2,8 +2,8 @@ var pyScLibCode =
 `import sys
 import os
 import pycodestyle
-# import pylint.epylint as lint #KP
-# import web_epylint as lint
+from pylint.lint import Run
+from pylint.reporters.text import TextReporter
 
 class WebPyCodeStyleReport(pycodestyle.StandardReport):
     """Reporter class."""
@@ -22,9 +22,8 @@ def run_pylint(web_pylint_opts, filename, lines):
     output = '***** pylint *****\\n'
     from io import StringIO
     lint_out = StringIO()
-    run_cmd = [filename, '--from-stdin', '--persistent=n', '--score=n']
-    run_cmd.extend(web_pylint_opts)
-    wb = WebRun(run_cmd, exit=False, lines=lines, web_output=lint_out)
+    reporter = TextReporter(lint_out)
+    Run([filename, '--persistent=n', '--score=n', '--clear-cache-post-run=y'] + web_pylint_opts, reporter=reporter, exit=False)
     output += lint_out.getvalue()
     return output
 
@@ -142,6 +141,9 @@ def process_one_file(style_summ, src_file):
     style_summ.total_file_count += 1
     style_summ.total_line_count += len(src_file.lines_list)
     if len(src_file.lines_list) > 0:
+	    ## The following 2 lines are needed for the website version of this file.  It saves the uploaded/edited file to the local pyodide file system
+        with open(src_file.filename, 'w') as out_file:
+            out_file.write(src_file.lines)
         output1 = run_pylint(style_summ.web_pylint_opts, src_file.filename, src_file.lines)
         extract_errors(src_file, output1, '(pylint) ')
         output2 = run_pycodestyle(src_file.filename, src_file.lines_list)
